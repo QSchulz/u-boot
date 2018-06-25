@@ -278,12 +278,19 @@ def test_env_import_whitelist(state_test_env):
     set_var(state_test_env, 'foo1', 'bar1')
     set_var(state_test_env, 'foo2', 'bar2')
     set_var(state_test_env, 'foo3', 'bar3')
+    validate_set(state_test_env, 'foo1', 'bar1')
+    validate_set(state_test_env, 'foo2', 'bar2')
+    validate_set(state_test_env, 'foo3', 'bar3')
 
     c.run_command('env export %s' % addr)
+    c.run_command('printenv filesize')
 
     unset_var(state_test_env, 'foo1')
     set_var(state_test_env, 'foo2', 'test2')
     set_var(state_test_env, 'foo4', 'bar4')
+    validate_empty(state_test_env, 'foo1')
+    validate_set(state_test_env, 'foo2', 'test2')
+    validate_set(state_test_env, 'foo4', 'bar4')
 
     # no foo1 in current env, foo2 overridden, foo3 should be of the value
     # before exporting and foo4 should be deleted
