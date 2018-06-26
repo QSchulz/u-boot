@@ -283,6 +283,7 @@ def test_env_import_whitelist(state_test_env):
     validate_set(state_test_env, 'foo3', 'bar3')
 
     c.run_command('env export %s' % addr)
+    c.run_command('md %s 1000' % addr)
     c.run_command('printenv filesize')
 
     unset_var(state_test_env, 'foo1')
